@@ -41,7 +41,7 @@ final class Core {
 		$value = $this->get_input( $name );
 
 		if ( false === $value || '' === $value ) {
-			echo '::error::', $this->escape_data( 'Input required and not supplied: ' . $name ), \PHP_EOL;
+			$this->error( 'Input required and not supplied: ' . $name );
 
 			exit( 1 );
 		}
@@ -65,6 +65,18 @@ final class Core {
 		}
 
 		\file_put_contents( $file, $name . '=' . $value . \PHP_EOL, \FILE_APPEND );
+	}
+
+	/**
+	 * Add an error issue.
+	 *
+	 * @link https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#setting-an-error-message
+	 * @link https://github.com/actions/toolkit/blob/fa980c4100e53128102670562e9e293518900112/packages/core/src/core.ts#L270-L284
+	 * @param string $message The error message.
+	 * @return void
+	 */
+	public function error( string $message ): void {
+		echo '::error::', $this->escape_data( $message ), \PHP_EOL;
 	}
 
 	/**
