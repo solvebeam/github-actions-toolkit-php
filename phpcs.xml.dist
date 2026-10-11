@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<ruleset name="SolveBeam GitHub Actions Toolkit">
+	<file>.</file>
+
+	<exclude-pattern type="relative">^vendor/*</exclude-pattern>
+
+	<rule ref="PronamicWP">
+		<!-- This is a CLI library, output goes to the GitHub Actions log and not to HTML. -->
+		<exclude name="WordPress.Security.EscapeOutput" />
+	</rule>
+</ruleset>

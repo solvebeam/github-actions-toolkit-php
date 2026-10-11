@@ -1,0 +1,58 @@
+{
+	"name": "solvebeam/github-actions-toolkit-php",
+	"description": "PHP toolkit for developing GitHub Actions.",
+	"type": "library",
+	"license": "MIT",
+	"keywords": [
+		"github",
+		"github-actions",
+		"actions",
+		"toolkit",
+		"workflow-commands"
+	],
+	"homepage": "https://github.com/solvebeam/github-actions-toolkit-php",
+	"autoload": {
+		"psr-4": {
+			"SolveBeam\\GitHubActionsToolkit\\": "psr-4/"
+		}
+	},
+	"authors": [
+		{
+			"name": "SolveBeam",
+			"email": "info@solvebeam.com",
+			"homepage": "https://www.solvebeam.com/",
+			"role": "Developer"
+		},
+		{
+			"name": "Remco Tolsma",
+			"email": "info@remcotolsma.nl",
+			"homepage": "https://www.remcotolsma.nl/",
+			"role": "Developer"
+		}
+	],
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
+		},
+		"platform": {
+			"php": "8.3"
+		},
+		"sort-packages": true
+	},
+	"require": {
+		"php": "^8.3"
+	},
+	"require-dev": {
+		"phpstan/extension-installer": "^1.4",
+		"phpstan/phpstan": "^2.2",
+		"pronamic/wp-coding-standards": "^2.5",
+		"rector/rector": "^2.6"
+	},
+	"scripts": {
+		"phpcs": "vendor/bin/phpcs",
+		"phpcbf": "vendor/bin/phpcbf",
+		"phpstan": "vendor/bin/phpstan analyse --memory-limit=-1",
+		"rector": "vendor/bin/rector process --dry-run"
+	}
+}
