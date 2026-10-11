@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `Core::start_group()` and `Core::end_group()` for grouping log lines.
-- `Style::bold()`, `Style::italic()` and `Style::underlined()` for styling output.
+- `Style::bold()`, `Style::italic()`, `Style::underlined()` and `Style::cyan()` for styling output.
+- `Style::command()` for formatting commands in output.
 
 [unreleased]: https://github.com/solvebeam/github-actions-toolkit-php
