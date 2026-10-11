@@ -8,5 +8,8 @@
 	<rule ref="PronamicWP">
 		<!-- This is a CLI library, output goes to the GitHub Actions log and not to HTML. -->
 		<exclude name="WordPress.Security.EscapeOutput" />
+
+		<!-- This is a CLI library, writing to files such as `GITHUB_OUTPUT` is how GitHub Actions workflow commands work. -->
+		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents" />
 	</rule>
 </ruleset>
