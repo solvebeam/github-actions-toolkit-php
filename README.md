@@ -27,6 +27,18 @@ $core->start_group( 'Install dependencies' );
 $core->end_group();
 ```
 
+### Styling output
+
+```php
+use SolveBeam\GitHubActionsToolkit\Style;
+
+$style = new Style();
+
+echo $style->bold( 'Bold' ), PHP_EOL;
+echo $style->italic( 'Italic' ), PHP_EOL;
+echo $style->underlined( 'Underlined' ), PHP_EOL;
+```
+
 ## Development
 
 ```sh
