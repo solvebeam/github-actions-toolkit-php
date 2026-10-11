@@ -12,5 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Core::start_group()` and `Core::end_group()` for grouping log lines.
 - `Style::bold()`, `Style::italic()`, `Style::underlined()` and `Style::cyan()` for styling output.
 - `Style::command()` for formatting commands in output.
+- `Core::set_failed()` for failing the action with an error message.
+- `Shell::run()` and `Shell::must_run()` for running commands.
 
 [unreleased]: https://github.com/solvebeam/github-actions-toolkit-php

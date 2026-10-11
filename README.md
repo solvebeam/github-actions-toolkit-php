@@ -41,6 +41,26 @@ echo $style->cyan( 'Cyan' ), PHP_EOL;
 echo $style->command( 'composer install' ), PHP_EOL;
 ```
 
+### Running commands
+
+```php
+use SolveBeam\GitHubActionsToolkit\Core;
+use SolveBeam\GitHubActionsToolkit\Shell;
+
+$core  = new Core();
+$shell = new Shell();
+
+try {
+	$shell->must_run( 'composer install --no-dev' );
+
+	$has_changes = 0 !== $shell->run( 'git diff --quiet' );
+} catch ( RuntimeException $e ) {
+	$core->set_failed( $e->getMessage() );
+}
+```
+
+`run()` prints and executes the command and returns the result code. `must_run()` does the same, but throws a `RuntimeException` if the result code is not `0`.
+
 ## Development
 
 ```sh

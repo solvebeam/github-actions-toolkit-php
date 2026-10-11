@@ -11,5 +11,8 @@
 
 		<!-- This is a CLI library, writing to files such as `GITHUB_OUTPUT` is how GitHub Actions workflow commands work. -->
 		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents" />
+
+		<!-- This is a CLI library, running commands is the purpose of the `Shell` class. -->
+		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_passthru" />
 	</rule>
 </ruleset>

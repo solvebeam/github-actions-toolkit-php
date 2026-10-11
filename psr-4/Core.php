@@ -41,9 +41,7 @@ final class Core {
 		$value = $this->get_input( $name );
 
 		if ( false === $value || '' === $value ) {
-			$this->error( 'Input required and not supplied: ' . $name );
-
-			exit( 1 );
+			$this->set_failed( 'Input required and not supplied: ' . $name );
 		}
 
 		return $value;
@@ -77,6 +75,19 @@ final class Core {
 	 */
 	public function error( string $message ): void {
 		echo '::error::', $this->escape_data( $message ), \PHP_EOL;
+	}
+
+	/**
+	 * Set the action status to failed, adds an error issue and exits.
+	 *
+	 * @link https://github.com/actions/toolkit/blob/fa980c4100e53128102670562e9e293518900112/packages/core/src/core.ts#L240-L249
+	 * @param string $message The error message.
+	 * @return never
+	 */
+	public function set_failed( string $message ): never {
+		$this->error( $message );
+
+		exit( 1 );
 	}
 
 	/**
