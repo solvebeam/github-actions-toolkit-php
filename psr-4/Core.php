@@ -41,7 +41,7 @@ final class Core {
 		$value = $this->get_input( $name );
 
 		if ( false === $value || '' === $value ) {
-			echo '::error::', \str_replace( [ '%', "\r", "\n" ], [ '%25', '%0D', '%0A' ], 'Input required and not supplied: ' . $name ), \PHP_EOL;
+			echo '::error::', $this->escape_data( 'Input required and not supplied: ' . $name ), \PHP_EOL;
 
 			exit( 1 );
 		}
@@ -75,7 +75,7 @@ final class Core {
 	 * @return void
 	 */
 	public function start_group( string $name ): void {
-		echo '::group::', \str_replace( [ '%', "\r", "\n" ], [ '%25', '%0D', '%0A' ], $name ), \PHP_EOL;
+		echo '::group::', $this->escape_data( $name ), \PHP_EOL;
 	}
 
 	/**
@@ -85,5 +85,27 @@ final class Core {
 	 */
 	public function end_group(): void {
 		echo '::endgroup::', \PHP_EOL;
+	}
+
+	/**
+	 * Escape the data of a workflow command.
+	 *
+	 * A workflow command ends at the newline, so line breaks in the data would
+	 * cut the command short. The runner decodes the data again, so `%` is the
+	 * escape character and has to be escaped as well.
+	 *
+	 * @link https://github.com/actions/toolkit/blob/fa980c4100e53128102670562e9e293518900112/packages/core/src/command.ts#L103-L108
+	 * @param string $data The data of the workflow command.
+	 * @return string
+	 */
+	private function escape_data( string $data ): string {
+		return \strtr(
+			$data,
+			[
+				'%'  => '%25',
+				"\r" => '%0D',
+				"\n" => '%0A',
+			]
+		);
 	}
 }
