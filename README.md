@@ -18,6 +18,7 @@ Already have PHP scripts in your workflows? Turn them into first-class actions w
 | --- | --- | --- |
 | [`Core`](psr-4/Core.php) | [`@actions/core`](https://github.com/actions/toolkit/tree/main/packages/core) | Inputs, outputs, errors, failing the action and log groups. |
 | [`Shell`](psr-4/Shell.php) | [`@actions/exec`](https://github.com/actions/toolkit/tree/main/packages/exec) | Run commands with the command echoed in the log, optionally failing on a non-zero exit code. |
+| [`Summary`](psr-4/Summary.php) | [`@actions/core` job summary](https://github.com/actions/toolkit/tree/main/packages/core#populating-job-summary) | Write Markdown to the job summary of the workflow run. |
 | [`Style`](psr-4/Style.php) | [`@actions/core` styling](https://github.com/actions/toolkit/tree/main/packages/core#styling-output) | Bold, italic, underlined and colored output. |
 
 ## Requirements
@@ -100,6 +101,22 @@ $core->error( 'Something went wrong.' );
 // Adds an error annotation and exits with code 1.
 $core->set_failed( 'Something went terribly wrong.' );
 ```
+
+### Job summary
+
+```php
+use SolveBeam\GitHubActionsToolkit\Summary;
+
+$summary = new Summary();
+
+$summary
+	->add_heading( 'Deploy to WordPress.org', 2 )
+	->add_eol()
+	->add_raw( '✅ Deployed.', true )
+	->write();
+```
+
+Content is buffered until `write()` appends it to the file in `GITHUB_STEP_SUMMARY`. Headings are written as Markdown, so Markdown such as lists and tables can follow directly.
 
 ### Styling output
 
