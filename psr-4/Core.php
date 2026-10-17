@@ -48,6 +48,27 @@ final class Core {
 	}
 
 	/**
+	 * Get boolean input, exits with an error if the input is not a boolean.
+	 *
+	 * Supports the `true | True | TRUE | false | False | FALSE` values of the
+	 * YAML 1.2 Core Schema, an input that is not supplied is `false`.
+	 *
+	 * @link https://github.com/actions/toolkit/blob/fa980c4100e53128102670562e9e293518900112/packages/core/src/core.ts#L178-L198
+	 * @link https://yaml.org/spec/1.2/spec.html#id2804923
+	 * @param string $name The name of the input.
+	 * @return bool
+	 */
+	public function get_boolean_input( string $name ): bool {
+		$value = $this->get_input( $name );
+
+		return match ( $value ) {
+			'true', 'True', 'TRUE' => true,
+			false, '', 'false', 'False', 'FALSE' => false,
+			default => $this->set_failed( 'Input does not meet YAML 1.2 "Core Schema" specification: ' . $name . "\n" . 'Support boolean input list: `true | True | TRUE | false | False | FALSE`' ),
+		};
+	}
+
+	/**
 	 * Set output.
 	 *
 	 * @link https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-output-parameter

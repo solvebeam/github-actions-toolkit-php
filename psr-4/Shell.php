@@ -43,6 +43,18 @@ final readonly class Shell {
 	}
 
 	/**
+	 * Skip a command, the command is printed but not executed.
+	 *
+	 * @param string $command The command.
+	 * @return void
+	 */
+	public function skip( string $command ): void {
+		$this->echo_command( $command );
+
+		echo 'Skipped, command not executed.', \PHP_EOL;
+	}
+
+	/**
 	 * Run a command that must succeed.
 	 *
 	 * @param string $command The command.

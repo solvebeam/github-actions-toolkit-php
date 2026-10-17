@@ -64,6 +64,34 @@ final class Summary {
 	}
 
 	/**
+	 * Add a Markdown fenced code block to the summary buffer.
+	 *
+	 * The fence is longer than the longest run of backticks in the code, so
+	 * the code can't close the block early.
+	 *
+	 * @link https://spec.commonmark.org/0.31.2/#fenced-code-blocks
+	 * @param string $code The code.
+	 * @param string $lang The language of the code, used for syntax highlighting.
+	 * @return self
+	 */
+	public function add_code_block( string $code, string $lang = '' ): self {
+		$length = 3;
+
+		\preg_match_all( '/`+/', $code, $matches );
+
+		foreach ( $matches[0] as $backticks ) {
+			$length = \max( $length, \strlen( $backticks ) + 1 );
+		}
+
+		$fence = \str_repeat( '`', $length );
+
+		return $this
+			->add_raw( $fence . $lang, true )
+			->add_raw( $code, true )
+			->add_raw( $fence, true );
+	}
+
+	/**
 	 * Write the summary buffer to the job summary file and empty the buffer.
 	 *
 	 * @return self

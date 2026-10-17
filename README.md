@@ -71,6 +71,9 @@ $name = $core->get_input( 'name' );
 // Fails the action if the input is not supplied.
 $token = $core->get_required_input( 'token' );
 
+// Returns `true` or `false`, fails the action on any other value.
+$dry_run = $core->get_boolean_input( 'dry-run' );
+
 $core->set_output( 'result', 'success' );
 ```
 
@@ -113,6 +116,7 @@ $summary
 	->add_heading( 'Deploy to WordPress.org', 2 )
 	->add_eol()
 	->add_raw( '✅ Deployed.', true )
+	->add_code_block( 'svn commit --message "Update"', 'shell' )
 	->write();
 ```
 
@@ -141,16 +145,24 @@ use SolveBeam\GitHubActionsToolkit\Shell;
 $core  = new Core();
 $shell = new Shell();
 
+$dry_run = $core->get_boolean_input( 'dry-run' );
+
 try {
 	$shell->must_run( 'composer install --no-dev' );
 
 	$has_changes = 0 !== $shell->run( 'git diff --quiet' );
+
+	if ( $dry_run ) {
+		$shell->skip( 'git push' );
+	} else {
+		$shell->must_run( 'git push' );
+	}
 } catch ( RuntimeException $e ) {
 	$core->set_failed( $e->getMessage() );
 }
 ```
 
-`run()` prints and executes the command and returns the result code. `must_run()` does the same, but throws a `RuntimeException` if the result code is not `0`. Commands are printed with the `[command]` prefix, which the GitHub Actions log viewer highlights, just like `@actions/exec` does.
+`run()` prints and executes the command and returns the result code. `must_run()` does the same, but throws a `RuntimeException` if the result code is not `0`. Commands are printed with the `[command]` prefix, which the GitHub Actions log viewer highlights, just like `@actions/exec` does. `skip()` only prints the command, which is useful for a dry run.
 
 ## Development
 
